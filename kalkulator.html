@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SunSavy</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/ad5070a164.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylekalku.css">
+
+</head>
+
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+			<div class="container">
+				<a href=""><img src="assets/image/logofix.png" alt="" height="80" class="d-inline-block me-3"></a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ms-auto gap-3">
+						<li class="nav-item">
+							<a class="nav-link activenav" href="index.html">Home</a>
+						</li>
+						<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Pembelajaran
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item " href="panel.html">Tentang Panel Surya</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item activedropdown" href="stemapproach.html">Pendekatan STEM</a>
+                                </li>
+                            </ul>
+                        </li>
+						<li class="nav-item">
+							<a class="nav-link" href="kebijakan.html">Kebijakan</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+	<main>
+        <div class="container2">
+            <h1>Kalkulator Panel Surya</h1>
+            
+            <label for="konsumsi">Konsumsi Listrik Harian (Wh):</label>
+            <input type="number" id="konsumsi" placeholder="Contoh: 5000">
+            
+            <label for="efisiensi">Efisiensi Panel Surya (%):</label>
+            <input type="number" id="efisiensi" placeholder="Contoh: 20">
+            
+            <label for="jam">Jumlah Jam Sinar Matahari Harian:</label>
+            <input type="number" id="jam" placeholder="Contoh: 5">
+            
+            <label for="daya">Daya Per Panel Surya (Wp):</label>
+            <input type="number" id="daya" placeholder="Contoh: 300">
+            
+            <label for="tarif">Tarif Listrik per kWh (Rupiah):</label>
+            <input type="number" id="tarif" placeholder="Contoh: 1500">
+            
+            <label for="biaya">Biaya Instalasi Panel Surya (Rupiah):</label>
+            <input type="number" id="biaya" placeholder="Contoh: 10000000">
+            
+            <button onclick="hitungPanelSurya()">Hitung</button>
+            <button class="btn btn-primary px-4" onclick="window.location.href='stemapproach.html'">Kembali</button>
+
+
+            <div class="output">
+                <p id="jumlah-panel"></p>
+                <p id="penghematan"></p>
+                <p id="roi"></p>
+            </div>
+        </div>
+
+        <script>
+            function hitungPanelSurya() {
+                // Ambil input pengguna
+                const konsumsi = parseFloat(document.getElementById('konsumsi').value);
+                const efisiensi = parseFloat(document.getElementById('efisiensi').value) / 100;
+                const jam = parseFloat(document.getElementById('jam').value);
+                const daya = parseFloat(document.getElementById('daya').value);
+                const tarif = parseFloat(document.getElementById('tarif').value);
+                const biaya = parseFloat(document.getElementById('biaya').value);
+                
+                // Validasi input
+                if (isNaN(konsumsi) || isNaN(efisiensi) || isNaN(jam) || isNaN(daya) || isNaN(tarif) || isNaN(biaya)) {
+                    alert("Harap isi semua bidang dengan angka yang valid.");
+                    return;
+                }
+
+                // Hitung jumlah panel surya yang dibutuhkan
+                const energi_total = konsumsi / efisiensi;
+                const watt_total = energi_total / jam;
+                const jumlah_panel = watt_total / daya;
+                
+                // Hitung penghematan dan ROI
+                const konsumsi_bulanan = konsumsi * 30;
+                const konsumsi_bulanan_kwh = konsumsi_bulanan / 1000;
+                const biaya_listrik_bulanan = konsumsi_bulanan_kwh * tarif;
+                const penghematan_tahunan = biaya_listrik_bulanan * 12;
+                const roi = (biaya / penghematan_tahunan) * 365; // ROI dalam hari
+                
+                // Tampilkan hasil
+                document.getElementById('jumlah-panel').innerText = `Jumlah panel surya yang dibutuhkan: ${jumlah_panel.toFixed(2)} panel`;
+                document.getElementById('penghematan').innerText = `Penghematan tahunan: Rp${penghematan_tahunan.toLocaleString('id-ID')}`;
+                document.getElementById('roi').innerText = `Waktu balik modal dalam satuan hari: ${roi.toFixed(0)} hari`;
+            }
+
+        </script>
+		<!-- footer -->
+		<section class="footer">
+			<div class="container-fluid footerp1">
+				<div class="container">
+					<div class="d-flex justify-content-between align-items-center">
+						<div class="footer-logo">
+							<img src="assets/image/logofix.png" alt="" height="80" class="d-inline-block me-3">
+						</div>
+						<div class="navfooter">
+							<ul class="m-auto gap-5 d-flex mr-5">
+								<li class="">
+									<a class="" href="index.html">Home</a>
+								</li>
+								<li class="">
+									<a class="" href="panel.html">Pembelajaran </a>
+								</li>
+								<li class="">
+									<a class="" href="kebijakan.html">Kebijakan</a>
+								</li>
+							</ul>
+						</div>
+						<div class="socmedicon gap-1">
+							<a href="404.html"><img src="assets/icon/youtubeicon.svg" alt="" class="me-3"></a>
+							<a href="https://www.instagram.com/blingbeadsss/" target="_blank"><img
+									src="assets/icon/instagramicon.svg" alt="" class="mx-1"></a>
+							<a href="404.html"><img src="assets/icon/twittericon.svg" alt="" class="ms-3"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container-fluid footerp2 py-3">
+				<div class="container">
+					<div class="d-flex justify-content-between align-items-center">
+						<p>&copy; 2024 SunSavy, All Rights Reserved</p>
+						<p>Designed by Kelompok5</p>
+					</div>
+
+				</div>
+			</div>
+		</section>
+		<!-- footer end -->
+	</main>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script src="assets/js/script.js"></script>
+</body>
+
+</html>

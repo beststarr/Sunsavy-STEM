@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SunSavy</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/ad5070a164.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylepos.css">
+
+</head>
+
+<body>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+			<div class="container">
+				<a href=""><img src="assets/image/logofix.png" alt="" height="80" class="d-inline-block me-3"></a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ms-auto gap-3">
+						<li class="nav-item">
+							<a class="nav-link activenav" href="index.html">Home</a>
+						</li>
+						<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Pembelajaran
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item " href="panel.html">Tentang Panel Surya</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item activedropdown" href="stemapproach.html">Pendekatan STEM</a>
+                                </li>
+                            </ul>
+                        </li>
+						<li class="nav-item">
+							<a class="nav-link" href="kebijakan.html">Kebijakan</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+	
+	<main>
+            <div class="container2">
+                <h1>Hitung Posisi Panel Surya Terbaik</h1>
+        
+                <label for="lintang">Garis Lintang Lokasi (°):</label>
+                <input type="number" id="lintang" placeholder="Masukkan garis lintang" required>
+        
+                <label for="bulan">Bulan (1-12):</label>
+                <input type="number" id="bulan" placeholder="Masukkan bulan" required>
+        
+                <label for="jam">Jam (0-23):</label>
+                <input type="number" id="jam" placeholder="Masukkan jam" required>
+        
+                <button onclick="hitungPosisi()">Hitung Posisi</button>
+                <button class="btn btn-primary px-4" onclick="window.location.href='stemapproach.html'">Kembali</button>
+        
+                <div class="output">
+                    <p id="arah"></p>
+                    <p id="kemiringan"></p>
+                </div>
+            </div>
+        
+            <script>
+                function hitungPosisi() {
+                    // Ambil input
+                    const lintang = parseFloat(document.getElementById('lintang').value);
+                    const bulan = parseInt(document.getElementById('bulan').value);
+                    const jam = parseInt(document.getElementById('jam').value);
+        
+                    // Hitung arah panel
+                    let arah = "Selatan"; // Di belahan bumi utara, panel harus menghadap selatan
+                    if (lintang < 0) { // Jika berada di belahan bumi selatan
+                        arah = "Utara";
+                    }
+        
+                    // Hitung kemiringan
+                    let kemiringan = lintang; // Kemiringan umum: sama dengan garis lintang
+        
+                    // Penyesuaian kemiringan berdasarkan bulan (musim)
+                    if (bulan >= 3 && bulan <= 8) { // Musim panas di belahan bumi utara (Maret hingga Agustus)
+                        kemiringan = lintang - 10; // Untuk musim panas, kita menurunkan kemiringannya
+                    } else if (bulan >= 9 && bulan <= 2) { // Musim dingin di belahan bumi utara (September hingga Februari)
+                        kemiringan = lintang + 10; // Untuk musim dingin, kita meningkatkannya
+                    }
+        
+                    // Tampilkan hasil
+                    document.getElementById('arah').innerText = `Arah panel terbaik: ${arah}`;
+                    document.getElementById('kemiringan').innerText = `Kemiringan panel terbaik: ${kemiringan}°`;
+                }
+            </script>
+		<!-- footer -->
+		<section class="footer">
+			<div class="container-fluid footerp1">
+				<div class="container">
+					<div class="d-flex justify-content-between align-items-center">
+						<div class="footer-logo">
+							<img src="assets/image/logofix.png" alt="" height="80" class="d-inline-block me-3">
+						</div>
+						<div class="navfooter">
+							<ul class="m-auto gap-5 d-flex mr-5">
+								<li class="">
+									<a class="" href="index.html">Home</a>
+								</li>
+								<li class="">
+									<a class="" href="panel.html">Pembelajaran </a>
+								</li>
+								<li class="">
+									<a class="" href="kebijakan.html">Kebijakan</a>
+								</li>
+							</ul>
+						</div>
+						<div class="socmedicon gap-1">
+							<a href="404.html"><img src="assets/icon/youtubeicon.svg" alt="" class="me-3"></a>
+							<a href="https://www.instagram.com/blingbeadsss/" target="_blank"><img
+									src="assets/icon/instagramicon.svg" alt="" class="mx-1"></a>
+							<a href="404.html"><img src="assets/icon/twittericon.svg" alt="" class="ms-3"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container-fluid footerp2 py-3">
+				<div class="container">
+					<div class="d-flex justify-content-between align-items-center">
+						<p>&copy; 2024 SunSavy, All Rights Reserved</p>
+						<p>Designed by Kelompok5</p>
+					</div>
+
+				</div>
+			</div>
+		</section>
+		<!-- footer end -->
+	</main>
+	<script src="https://code.jquery.com/jquery-3.7.1.js"
+		integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script src="assets/js/script.js"></script>
+</body>
+
+</html>
